@@ -24,7 +24,6 @@ patients = CSV.parse(File.open(source_file))
 
 now = DateTime.now.iso8601(3)
 
-report_timestamp = patients.shift
 human_headers = patients.shift
 dhis2_headers = patients.shift
 
