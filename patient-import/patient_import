@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+
+require 'pp'
+
+source_file = ARGV.shift
+org_unit_id = ARGV.shift
+patient_attribute_id = ARGV.shift
+
+unless source_file
+  puts   <<~DOC
+    Must provide name of source file.
+  
+    Usage:
+      patient_import <source_file>
+  DOC
+
+  abort
+end
+
+require 'csv'
+patients = CSV.parse(File.open("./src/#{source_file}"))
+
+now = DateTime.now.iso8601(3)
+
+report_timestamp = patients.shift
+human_headers = patients.shift
+dhis2_headers = patients.shift
+
+dhis2_patients = patients.map do |patient|
+  patient_data = dhis2_headers.zip(patient).to_h
+  patient_data.delete(nil)
+
+
+      {
+        orgUnit: org_unit_id,
+        createdAtClient: now,
+        lastUpdated: now,
+        trackedEntityType: patient_attribute_id,
+        lastUpdatedAtClient: now,
+        inactive: false,
+        deleted: false,
+        featureType: "NONE",
+        programOwners: [],
+        enrollments: [],
+        relationships: [],
+        attributes: [
+          patient_data.map do |attr_id, value|
+            {
+              attribute: attr_id,
+              value: value
+            }
+          end
+        ]
+      }
+end
+
+pp({ trackedEntityInstances: dhis2_patients })
