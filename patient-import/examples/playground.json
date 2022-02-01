@@ -10,83 +10,88 @@
       "deleted": false,
       "featureType": "NONE",
       "programOwners": [],
-      "enrollments": [],
+      "enrollments": [{
+        "orgUnit": "SGeL573UZ41",
+        "program": "mQXJ2MrV7nu",
+        "enrollmentDate": "2021-12-15",
+        "incidentDate": "2021-12-15"
+    }],
       "relationships": [],
       "attributes": [
         {
           "attribute": "isa5zXLGmBY",
-          // "displayName": "Phone number",
+          "displayName": "Phone number",
           "value": "2223336547"
         },
         {
           "attribute": "QXz5IGHmNIw",
-          // "displayName": "Full name",
-          "value": "James Pineapple"
+          "displayName": "Full name",
+          "value": "Hari Test 2"
         },
         {
           "attribute": "cIwnHsMZmIx",
-          // "displayName": "Gender",
+          "displayName": "Gender",
           "value": "male"
         },
         {
-          "attribute": "FEUSb4oQ5B3",
-          // "displayName": "Age",
-          "value": "1976-11-17"
+          "attribute": "lTqdfqDhSoB",
+          "displayName": "Age",
+          "value": "50"
         },
         {
           "attribute": "hWfe9FSk7Hb",
-          // "displayName": "Address",
+          "displayName": "Address",
           "value": "45 Marigold Lane near the Church"
         },
         {
           "attribute": "PBZWjZnAdCw",
-          // "displayName": "County",
-          "value": "Carroll Gardens"
+          "displayName": "County",
+          "value": "Kings County"
         },
         {
           "attribute": "qLPrfEtnR8w",
-          // "displayName": "Treatment supporter's full name",
+          "displayName": "Treatment supporter's full name",
           "value": "Carrol Pineapple"
         },
         {
           "attribute": "dwiaDLPU733",
-          // "displayName": "Treatment supporter's relationship to patient",
+          "displayName": "Treatment supporter's relationship to patient",
           "value": "Wife"
         },
         {
           "attribute": "kiCb8SlOSHL",
-          // "displayName": "Treatment supporter's phone number",
+          "displayName": "Treatment supporter's phone number",
           "value": "1112224569"
         },
         {
           "lastUpdated": "2021-11-17T00:00:00.000",
           "attribute": "rJcdiJaBkcK",
-          // "displayName": "Diagnosed with hypertension?",
-          "value": "true"
+          "displayName": "Diagnosed with hypertension?",
+          "value": "Yes"
         },
         {
           "attribute": "buymcgWAGXV",
-          // "displayName": "Diagnosed with diabetes?",
-          "value": "false"
+          "displayName": "Diagnosed with diabetes?",
+          "value": "No"
         },
         {
           "attribute": "I0YicSfjiC9",
-          // "displayName": "Treatment history HTN",
-          "value": "false"
+          "displayName": "Treatment history HTN",
+          "value": "First time"
         },
         {
           "attribute": "Fh2hBwYDA1R",
-          // "displayName": "Treatment history DM",
-          "value": "false"
+          "displayName": "Treatment history DM",
+          "value": "First time"
         },
         {
           "attribute": "tFTfftZtx05",
-          // "displayName": "Patient consent",
-          "value": "true"
+          "displayName": "Patient consent",
+          "value": "Yes"
         },
         {
           "attribute": "lTqdfqDhSoB",
-          // "displayName": "Age in years",
+          "displayName": "Age in years",
           "value": "45"
         }
       ]
