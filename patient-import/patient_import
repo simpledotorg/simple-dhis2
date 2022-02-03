@@ -1,17 +1,19 @@
 #!/usr/bin/env ruby
 
 require 'pp'
+require 'pry'
 
 source_file = ARGV.shift
 org_unit_id = ARGV.shift
 tracked_entity_type_id = ARGV.shift
+program_id = ARGV.shift
 
 unless source_file
   puts   <<~DOC
     Must provide name of source file.
 
     Usage:
-      patient_import <source_file> <org_unit_id> <tracked_entity_type_id>
+      patient_import <source_file> <org_unit_id> <tracked_entity_type_id> <program_id>
   DOC
 
   abort
@@ -28,6 +30,9 @@ human_headers = patients.shift
 dhis2_headers = patients.shift
 
 dhis2_patients = patients.map do |patient|
+  registration_date = DateTime.parse(human_headers.zip(patient).to_h["Registration Date"])
+  registration_date = registration_date.iso8601(3)
+
   patient_data = dhis2_headers.zip(patient).to_h
   patient_data.delete(nil)
 
@@ -48,7 +53,14 @@ dhis2_patients = patients.map do |patient|
     deleted: false,
     featureType: "NONE",
     programOwners: [],
-    enrollments: [],
+    enrollments: [
+      {
+        orgUnit: org_unit_id,
+        program: program_id,
+        enrollmentDate: registration_date,
+        incidentDate: registration_date
+      }
+    ],
     relationships: [],
     attributes: patient_attributes
   }
