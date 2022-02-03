@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
 require 'pp'
-require 'pry'
 
 source_file = ARGV.shift
 org_unit_id = ARGV.shift
@@ -29,41 +29,52 @@ now = DateTime.now.iso8601(3)
 human_headers = patients.shift
 dhis2_headers = patients.shift
 
-dhis2_patients = patients.map do |patient|
-  registration_date = DateTime.parse(human_headers.zip(patient).to_h["Registration Date"])
-  registration_date = registration_date.iso8601(3)
+index = 01
 
-  patient_data = dhis2_headers.zip(patient).to_h
-  patient_data.delete(nil)
+until patients.empty? do
+  dhis2_patients = patients.shift(200).map do |patient|
+    registration_date = DateTime.parse(human_headers.zip(patient).to_h["Registration Date"])
+    registration_date = registration_date.iso8601(3)
 
-  patient_attributes = patient_data.map do |attr_id, value|
+    patient_data = dhis2_headers.zip(patient).to_h
+    patient_data.delete(nil)
+
+    patient_attributes = patient_data.map do |attr_id, value|
+      {
+        attribute: attr_id,
+        value: value
+      }
+    end
+
     {
-      attribute: attr_id,
-      value: value
+      orgUnit: org_unit_id,
+      createdAtClient: now,
+      lastUpdated: now,
+      trackedEntityType: tracked_entity_type_id,
+      lastUpdatedAtClient: now,
+      inactive: false,
+      deleted: false,
+      featureType: "NONE",
+      programOwners: [],
+      enrollments: [
+        {
+          orgUnit: org_unit_id,
+          program: program_id,
+          enrollmentDate: registration_date,
+          incidentDate: registration_date
+        }
+      ],
+      relationships: [],
+      attributes: patient_attributes
     }
   end
 
-  {
-    orgUnit: org_unit_id,
-    createdAtClient: now,
-    lastUpdated: now,
-    trackedEntityType: tracked_entity_type_id,
-    lastUpdatedAtClient: now,
-    inactive: false,
-    deleted: false,
-    featureType: "NONE",
-    programOwners: [],
-    enrollments: [
-      {
-        orgUnit: org_unit_id,
-        program: program_id,
-        enrollmentDate: registration_date,
-        incidentDate: registration_date
-      }
-    ],
-    relationships: [],
-    attributes: patient_attributes
-  }
-end
 
-puts({ trackedEntityInstances: dhis2_patients }.to_json)
+  FileUtils.mkdir_p('payloads')
+
+  File.open("payloads/tracked-entities-#{index}.json", "w") do |f|
+    f.write({ trackedEntityInstances: dhis2_patients }.to_json)
+  end
+
+  index += 1
+end
