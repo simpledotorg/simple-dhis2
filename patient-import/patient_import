@@ -72,6 +72,9 @@ until patients.empty? do
 
   FileUtils.mkdir_p('payloads')
 
+  payload_file = "payloads/tracked-entities-#{index}.json"
+  puts "Outputting to #{payload_file}"
+
   File.open("payloads/tracked-entities-#{index}.json", "w") do |f|
     f.write({ trackedEntityInstances: dhis2_patients }.to_json)
   end
